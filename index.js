@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
-const Movie=require("./models/movie.model")
+
+
+const MovieRoutes=require("./routes/movie.routes")
 
 const app = express();
 
@@ -9,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+MovieRoutes(app)   //invoking movie routes
 // Route
 app.get("/home", (req, res) => {
     res.status(200).json({
