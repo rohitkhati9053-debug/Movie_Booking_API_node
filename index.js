@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const Movie=require("./models/movie.model")
 
 const app = express();
 
@@ -21,6 +22,18 @@ async function connectDB() {
     try {
         await mongoose.connect(process.env.DB_URL);
         console.log("✅ MongoDB Connected");
+        // const createdMovie=await Movie.create({
+        //     name:"Boogi Boogi",
+        //     description:"comedy",
+        //     casts:["akshay","kirti"],
+        //     director:"farhas",
+        //     trailerUrl:"https://boody.com",
+        //     language:"Hindi",
+        //     releaseDate:"18-01-2026",
+        //     releaseStatus:"RELEASED"
+        // })
+        // console.log("createdMdie: ",createdMovie);
+        
 
         app.listen(process.env.PORT, () => {
             console.log(`🚀 Server running on port ${process.env.PORT}`);
