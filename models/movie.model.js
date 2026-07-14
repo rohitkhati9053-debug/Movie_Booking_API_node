@@ -3,11 +3,13 @@ const mongoose=require("mongoose")
 const movieSchema=new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:true,
+        minLength:3
     },
     description:{
         type:String,
-        required:true
+        required:true,
+        minLength:[4,"description should me atleast 4 charcters"]
     },
     casts:{
         type:[String],
