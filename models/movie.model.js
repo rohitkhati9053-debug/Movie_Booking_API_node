@@ -16,7 +16,7 @@ const movieSchema=new mongoose.Schema({
     trailerUrl:{
         type:String,
         required:true
-    },
+    },  
     language:{
         type:[String],
         required:true,
