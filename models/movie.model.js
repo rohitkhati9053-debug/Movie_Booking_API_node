@@ -1,47 +1,48 @@
-const mongoose=require("mongoose")
+const mongoose = require("mongoose");
 
-const movieSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        minLength:3
+const movieSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      minLength: 3,
     },
-    description:{
-        type:String,
-        required:true,
-        minLength:[4,"description should me atleast 4 charcters"]
+    description: {
+      type: String,
+      required: true,
     },
-    casts:{
-        type:[String],
-        required:true
+    casts: {
+      type: [String],
+      required: true,
     },
-    trailerUrl:{
-        type:String,
-        required:true
-    },  
-    language:{
-        type:[String],
-        required:true,
-        default:"English"
+    trailerUrl: {
+      type: String,
+      required: true,
     },
-    releaseDate:{
-        type:String,
-        required:true
+    language: {
+      type: [String],
+      required: true,
+      default: "English",
     },
-    director:{
-        type:String,
-        required:true
+    releaseDate: {
+      type: String,
+      required: true,
     },
-    releaseStatus:{
-        type:String,
-        required:true,
-        default:"RELEASED",
-    },  
-},
-{
-    timestamps:true
-})
+    director: {
+      type: String,
+      required: true,
+    },
+    releaseStatus: {
+      type: String,
+      required: true,
+      default: "RELEASED",
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
-const Movie=mongoose.model("Movie",movieSchema)
+const Movie = mongoose.model("Movie", movieSchema);
 
-module.exports=Movie
+module.exports = Movie;
