@@ -1,11 +1,11 @@
 
-const errorResposneBody = {
+const errorResponseBody = {
   err: {},
   data: {},
   message: "Something went wrong,cannot process the request",
   success: false,
 };
-const successResposneBody = {
+const successResponseBody = {
   err: {},
   data: {},
   message: "Successfully process the request",
@@ -13,6 +13,6 @@ const successResposneBody = {
 };
 
 module.exports={
-    errorResposneBody,
-    successResposneBody
+    errorResponseBody,
+    successResponseBody
 }

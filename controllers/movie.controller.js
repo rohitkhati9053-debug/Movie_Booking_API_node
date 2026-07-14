@@ -1,23 +1,23 @@
 const Movie = require("../models/movie.model");
 const movieService = require("../services/movie.service");
-const {successResposneBody,errorResposneBody}=require("../utils/responsebody")
+const {successResponseBody,errorResponseBody}=require("../utils/responsebody")
 
 const createMovie = async (req, res) => {
   try {
     const response = await movieService.createMovie(req.body);
     if(response.err){
-        errorResposneBody.err=response.err
-        errorResposneBody.code=response.code
-        errorResposneBody.code="Validation failed on few parameter of the request body"
-        return res.status(response.code).json(errorResposneBody)
+        errorResponseBody.err=response.err
+        errorResponseBody.code=response.code
+        errorResponseBody.code="Validation failed on few parameter of the request body"
+        return res.status(response.code).json(errorResponseBody)
     }
 
-    successResposneBody.data = movie;
-    successResposneBody.message="Successfully created the movie"
-    return res.status(201).json(successResposneBody);
+    successResponseBody.data = movie;
+    successResponseBody.message="Successfully created the movie"
+    return res.status(201).json(successResponseBody);
   } catch (err) {
     console.log(err.name);
-    return res.status(500).json(errorResposneBody);
+    return res.status(500).json(errorResponseBody);
   }
 };
 
@@ -26,12 +26,12 @@ const deleteMovie = async (req, res) => {
   try {
     const response = await movieService.deleteMovie(req.params.id);
 
-    successResposneBody.data = response;
-    successResposneBody.message="Successfully deleted the movie"
-    return res.status(200).json(successResposneBody);
+    successResponseBody.data = response;
+    successResponseBody.message="Successfully deleted the movie"
+    return res.status(200).json(successResponseBody);
   } catch (err) {
     console.log(err);
-    return res.status(500).json(errorResposneBody);
+    return res.status(500).json(errorResponseBody);
   }
 };
 
@@ -41,17 +41,17 @@ const getMovie = async (req, res) => {
     const response = await movieService.getMovieById(req.params.id);
 
     if (response.err) {
-      errorResposneBody.err = response.err;
+      errorResponseBody.err = response.err;
 
-      return res.status(response.code).json(errorResposneBody);
+      return res.status(response.code).json(errorResponseBody);
     }
 
-    successResposneBody.data = response;
-    successResposneBody.message="Sucesfully fetched the movie details "
-    return res.status(200).json(successResposneBody);
+    successResponseBody.data = response;
+    successResponseBody.message="Sucesfully fetched the movie details "
+    return res.status(200).json(successResponseBody);
   } catch (err) {
     console.log(err);
-    return res.status(500).json(errorResposneBody);
+    return res.status(500).json(errorResponseBody);
   }
 };
 
