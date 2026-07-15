@@ -68,7 +68,7 @@ const updateMovie = async (req, res) => {
     }
     successResponseBody.data = response;
     return res.status(200).json(successResponseBody);
-  } catch (error) {
+  } catch (err) {
     console.log(err);
     errorResponseBody.err = err;
     return res.status(500).json(errorResponseBody);
