@@ -4,6 +4,7 @@ require("dotenv").config();
 
 
 const MovieRoutes=require("./routes/movie.routes")
+const theatreRoutes=require("./routes/theatre.routes")
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 MovieRoutes(app)   //invoking movie routes
+theatreRoutes(app)   //invoking theatre routes
 // Route
 app.get("/home", (req, res) => {
     res.status(200).json({
