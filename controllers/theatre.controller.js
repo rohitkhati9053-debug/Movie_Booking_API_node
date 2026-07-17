@@ -9,7 +9,7 @@ const create = async (req, res) => {
     const response = await theatreService.createTheatre(req.body);
     if (response.err) {
       errorResponseBody.err = response.err;
-      errorResponseBody.message =
+      errorResponseBody.message = 
         "Validation failed on the few parameters  of the request body";
       return res.status(response.code).json(errorResponseBody);
     }
@@ -36,7 +36,6 @@ const getTheatre = async (req, res) => {
     console.log(error);
     errorResponseBody.err=error
     return res.status(500).json(errorResponseBody)
-    
   }
 };
 

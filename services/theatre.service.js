@@ -22,6 +22,8 @@ const createTheatre=async (data)=>{
     }
 }
 
+
+
 const getTheatre=async(id)=>{
     try {
         const response=await Theatre.findById(id)
