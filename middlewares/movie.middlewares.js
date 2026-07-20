@@ -21,7 +21,7 @@ if (!Array.isArray(req.body.casts) || req.body.casts.length===0) {
 }
 
 if(!req.body.trailerUrl){
-    badRequestResponse.err="The trailer url of the move is not present in request";
+    badRequestResponse.err="The trailer url of  the move is not present in request";
     return res.status(400).json(badRequestResponse)
 }
 

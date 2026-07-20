@@ -8,7 +8,7 @@ const routes=(app)=>{
   app.get("/mba/api/v1/theatres/:id",theatreController.getTheatre)
   app.delete("/mba/api/v1/theatres/:id",theatreController.destroy)
   app.put("/mba/api/v1/theatres/:id",theatreController.updateTheatre)
-  app.get("/mba/api/v1/theatres",theatreController.getAllTheatres)
+  app.get("/mba/api/v1/theatres",theatreController.getAllTheatres)  
 }
 
 module.exports=routes

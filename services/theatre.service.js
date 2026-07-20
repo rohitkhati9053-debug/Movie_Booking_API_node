@@ -61,11 +61,17 @@ const deleteTheatres=async(id)=>{
 
 const updateTheatre=async (id,data)=>{
   try {
-    const theatre=await Theatre.findByIdAndUpdate(id,data,{
+    const response=await Theatre.findByIdAndUpdate(id,data,{
         new:true,
         runValidators:true
     })
-    return theatre
+    if(!response){
+        return {
+            err:"No theatre",
+            code:404
+        }
+    }
+    return response
   } catch (error) {
     if(error.name==="ValidationError"){
         const err={}
@@ -81,17 +87,46 @@ const updateTheatre=async (id,data)=>{
   }
 }
 
-const getAllTheatres=async(filter)=>{
+const getAllTheatres = async (data) => {
     try {
-        const theatres=await Theatre.find({})
-    return theatres;
+
+        const query = {};
+
+        if (data?.city) {
+            query.city = data.city;
+        }
+
+        if (data?.pincode) {
+            query.pincode = data.pincode;
+        }
+
+        if (data?.name) {
+            query.name = {
+                $regex: data.name,
+                $options: "i"
+            };
+        }
+
+        const pagination = {};
+
+        if (data?.limit) {
+            pagination.limit = Number(data.limit);
+        }
+
+        if (data?.skip !== undefined) {
+            const perPage = Number(data.limit) || 3;
+            pagination.skip = Number(data.skip) * perPage;
+        }
+
+        const response = await Theatre.find(query, {}, pagination);
+
+        return response;
+
     } catch (error) {
         console.log(error);
-        throw error
-        
+        throw error;
     }
-}
-
+};
 //   let query={}
     // if(filter.name){
     //     query.name=filter.name
