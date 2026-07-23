@@ -22,7 +22,7 @@ const theatreSchema=new mongoose.Schema({
     },
     movies:{
         type:[mongoose.Schema.Types.ObjectId],
-        ref:"Movies"
+        ref:"Movie"
     }
 },
 {

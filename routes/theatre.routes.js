@@ -9,6 +9,8 @@ const routes=(app)=>{
   app.delete("/mba/api/v1/theatres/:id",theatreController.destroy)
   app.put("/mba/api/v1/theatres/:id",theatreController.updateTheatre)
   app.get("/mba/api/v1/theatres",theatreController.getAllTheatres)  
+
+  app.patch("/mba/api/v1/theatres/:id/movies",theatreMiddleware.validateUpdateMovies,theatreController.updateMovies)  
 }
 
 module.exports=routes
