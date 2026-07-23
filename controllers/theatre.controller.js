@@ -118,7 +118,6 @@ const updateMovies=async(req,res)=>{
   }
 }
 
-  
 module.exports = {
   create,
   getTheatre,

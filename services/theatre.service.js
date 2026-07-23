@@ -90,25 +90,23 @@ const getAllTheatres = async (data) => {
     }
 
     if (data?.pincode) {
+      // check pincode is present in the query parameter  or not
       query.pincode = data.pincode;
     }
 
     if (data?.name) {
-      query.name = {
-        $regex: data.name,
-        $options: "i",
-      };
+        query.name=data.name
     }
-
+    // // if we have data arranged in the order offset tell us that from what record number,we should start returning the data
     const pagination = {};
 
-    if (data?.limit) {
-      pagination.limit = Number(data.limit);
+    if (data && data?.limit) {
+      pagination.limit = data.limit
     }
 
-    if (data?.skip !== undefined) {
-      const perPage = Number(data.limit) || 3;
-      pagination.skip = Number(data.skip) * perPage;
+    if (data && data?.skip) {
+      let perPage = (data.perPage) ? data.perPage: 3;
+      pagination.skip = data.skip * perPage;
     }
 
     const response = await Theatre.find(query, {}, pagination);
@@ -119,48 +117,37 @@ const getAllTheatres = async (data) => {
     throw error;
   }
 };
-//   let query={}
-// if(filter.name){
-//     query.name=filter.name
-// }
-// let movies=await Movie.find(query)
-// if(!movies){
-//     return {
-//         err:"Not able to find the query movies",
-//         code:404
-//     }
-// }
 
-    const updateMoviesInTheatres = async (theatreId, movieIds, insert) => {
-    const theatre = await Theatre.findById(theatreId);
+const updateMoviesInTheatres = async (theatreId, movieIds, insert) => {
+  const theatre = await Theatre.findById(theatreId);
 
-    if (!theatre) {
-        return {
-        err: "No such theatre found for the given theatre id",
-        code: 404,
-        };
-    }
-
-    if (insert) {
-        movieIds.forEach((movieId) => {
-        const exists = theatre.movies.some(
-            (id) => id.toString() === movieId.toString(),
-            );
-
-        if (!exists) {
-            theatre.movies.push(movieId);
-        }
-        });
-    } else {
-        theatre.movies = theatre.movies.filter(
-        (movie) => !movieIds.some((id) => id.toString() === movie.toString()),
-        );
-    }
-
-    await theatre.save();
-
-    return theatre.populate("movies");
+  if (!theatre) {
+    return {
+      err: "No such theatre found for the given theatre id",
+      code: 404,
     };
+  }
+
+  if (insert) {
+    movieIds.forEach((movieId) => {
+      const exists = theatre.movies.some(
+        (id) => id.toString() === movieId.toString(),
+      );
+
+      if (!exists) {
+        theatre.movies.push(movieId);
+      }
+    });
+  } else {
+    theatre.movies = theatre.movies.filter(
+      (movie) => !movieIds.some((id) => id.toString() === movie.toString()),
+    );
+  }
+
+  await theatre.save();
+
+  return theatre.populate("movies");
+};
 
 module.exports = {
   createTheatre,
