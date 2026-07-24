@@ -118,35 +118,54 @@ const getAllTheatres = async (data) => {
   }
 };
 
-const updateMoviesInTheatres = async (theatreId, movieIds, insert) => {
-  const theatre = await Theatre.findById(theatreId);
 
-  if (!theatre) {
-    return {
-      err: "No such theatre found for the given theatre id",
-      code: 404,
-    };
-  }
+const updateMoviesInTheatres = async (
+    theatreId,
+    movieIds,
+    insert
+) => {
 
-  if (insert) {
-    movieIds.forEach((movieId) => {
-      const exists = theatre.movies.some(
-        (id) => id.toString() === movieId.toString(),
-      );
+    let result;
 
-      if (!exists) {
-        theatre.movies.push(movieId);
-      }
-    });
-  } else {
-    theatre.movies = theatre.movies.filter(
-      (movie) => !movieIds.some((id) => id.toString() === movie.toString()),
-    );
-  }
+    if (insert) {
 
-  await theatre.save();
+        result = await Theatre.updateOne(
+            { _id: theatreId },
+            {
+                $addToSet: {
+                    movies: {
+                        $each: movieIds
+                    }
+                }
+            }
+        );
 
-  return theatre.populate("movies");
+    } else {
+
+        result = await Theatre.updateOne(
+            { _id: theatreId },
+            {
+                $pull: {
+                    movies: {
+                        $in: movieIds
+                    }  
+                }
+            }
+        );
+
+    }
+
+    if (result.matchedCount === 0) {
+        return {
+            err: "No theatre found for the given theatre id",
+            code: 404
+        };
+    }
+
+    const theatre = await Theatre.findById(theatreId)
+        .populate("movies");
+
+    return theatre;
 };
 
 module.exports = {
