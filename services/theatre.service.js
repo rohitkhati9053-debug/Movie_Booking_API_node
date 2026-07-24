@@ -129,7 +129,7 @@ const updateMoviesInTheatres = async (
 
     if (insert) {
 
-        result = await Theatre.updateOne(
+        result = await Theatre.findByIdAndUpdate(
             { _id: theatreId },
             {
                 $addToSet: {
@@ -137,12 +137,13 @@ const updateMoviesInTheatres = async (
                         $each: movieIds
                     }
                 }
-            }
+            },
+            {new:true}
         );
 
     } else {
 
-        result = await Theatre.updateOne(
+        result = await Theatre.findByIdAndUpdate(
             { _id: theatreId },
             {
                 $pull: {
@@ -150,9 +151,9 @@ const updateMoviesInTheatres = async (
                         $in: movieIds
                     }  
                 }
-            }
-        );
-
+            },
+            {new:true}
+        )
     }
 
     if (result.matchedCount === 0) {
